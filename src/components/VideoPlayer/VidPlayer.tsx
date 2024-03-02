@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import { Video, CloudinaryContext } from "cloudinary-react";
 
 interface VidPlayerProps {
@@ -13,6 +13,7 @@ export default function VidPlayer({ publicID }: VidPlayerProps) {
         className="w-full h-full min-h-screen object-cover"
         loop
         autoPlay
+        muted
       />
     </CloudinaryContext>
   );
