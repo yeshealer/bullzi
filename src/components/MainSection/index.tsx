@@ -81,7 +81,7 @@ export default function MainSection() {
               } py-1.5 px-1.5 rounded-xl`}
               onClick={handleClick}
             >
-              <div className="border border-4 border-white px-16 py-3 rounded-xl">
+              <div className="border border-4 border-white min-w-[350px] py-3 rounded-xl">
                 {isWhitelisted
                   ? "Disconnect"
                   : connected
