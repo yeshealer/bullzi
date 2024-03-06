@@ -16,6 +16,23 @@
   }
 }
 
+.btn-box-shadow-green,
+.btn-box-shadow-purple {
+  -webkit-text-stroke: 1px black;
+}
+
+.btn-box-shadow-green:hover {
+  box-shadow: 0 0 5px #24ff00, 0 0 10px #24ff00, 0 0 15px #24ff00,
+    0 0 40px #24ff00;
+  transition: all 500ms;
+}
+
+.btn-box-shadow-purple:hover {
+  box-shadow: 0 0 5px #ff04c8, 0 0 10px #ff04c8, 0 0 15px #ff04c8,
+    0 0 40px #ff04c8;
+  transition: all 500ms;
+}
+
 body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(

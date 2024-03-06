@@ -65,7 +65,7 @@ export default function MainSection() {
         />
       </div>
       <div className="flex-1 -mt-10 lg:mt-0">
-        <div className="bg-black/70 backdrop-blur-sm min-w-[360px] sm:min-w-[520px] md:min-w-[650px] lg:min-w-[480px] xl:min-w-[550px] 2xl:min-w-[650px] w-[75%] h-[450px] sm:h-[550px] md:h-[600px] lg:h-[520px] xl:h-[600px] 2xl:h-[700px] rounded-3xl p-6 flex flex-col items-center justify-around">
+        <div className="bg-black/70 backdrop-blur-sm min-w-[360px] sm:min-w-[520px] md:min-w-[650px] lg:min-w-[480px] xl:min-w-[550px] 2xl:min-w-[650px] w-[75%] h-[450px] sm:h-[550px] md:h-[600px] lg:h-[520px] xl:h-[600px] 2xl:h-[640px] rounded-3xl p-6 py-10 lg:py-20 flex flex-col items-center justify-around">
           <div className="flex flex-col items-center gap-2">
             <div className="text-6xl sm:text-7xl md:text-8xl lg:text-7xl 2xl:text-8xl font-bold">
               BULLZI
@@ -76,20 +76,19 @@ export default function MainSection() {
           </div>
           <div className="cursor-pointer w-[280px] sm:w-[360px] md:w-[420px] lg:w-[320px] xl:w-[360px] 2xl:w-[420px] h-[180px] relative flex items-center justify-center">
             <button
-              className="absolute text-xl sm:text-3xl lg:text-xl xl:text-2xl 2xl:text-3xl"
+              className={`text-xl sm:text-3xl lg:text-xl xl:text-2xl 2xl:text-3xl ${
+                !connected ? "bg-[#24FF00] btn-box-shadow-green" : "bg-[#FF04C8] btn-box-shadow-purple"
+              } py-1.5 px-1.5 rounded-xl`}
               onClick={handleClick}
             >
-              {isWhitelisted
-                ? "Disconnect"
-                : connected
-                ? "RING STASH"
-                : "Connect"}
+              <div className="border border-4 border-white px-16 py-3 rounded-xl">
+                {isWhitelisted
+                  ? "Disconnect"
+                  : connected
+                  ? "RING STASH"
+                  : "Connect"}
+              </div>
             </button>
-            {connected ? (
-              <img src="/images/ring-stash-btn.png" />
-            ) : (
-              <img src="/images/connect-btn.png" />
-            )}
           </div>
           {!isWhitelisted ? (
             <div className="flex flex-col items-center gap-2">
