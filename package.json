@@ -23,6 +23,7 @@
     "next-auth": "^4.24.6",
     "react": "^18",
     "react-dom": "^18",
+    "react-icons": "^5.0.1",
     "react-intersection-observer": "^9.8.1",
     "tweetnacl": "^1.0.3"
   },

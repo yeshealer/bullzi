@@ -10,7 +10,6 @@ import {
   endpoint,
 } from "@/api/utils/constants";
 import { AnchorWallet } from "@solana/wallet-adapter-react";
-import { PublicKey } from "@solana/web3.js";
 import kp from "@/api/idl/keypair.json";
 
 interface WhiteListProps {
@@ -33,9 +32,11 @@ async function airdrop(connection, destinationWallet, amount) {
 }
 
 const useWhitelist = ({ wallet, publicKey }: WhiteListProps) => {
-  const arr = Object.values(kp._keypair.secretKey);
-  const secret = new Uint8Array(arr);
-  const whitelist = web3.Keypair.fromSecretKey(secret);
+  // const arr = Object.values(kp._keypair.secretKey);
+  // const secret = new Uint8Array(arr);
+  // const whitelist = web3.Keypair.fromSecretKey(secret);
+
+  const whitelist = web3.Keypair.generate();
 
   const getProvider = () => {
     if (!wallet) return;
@@ -45,7 +46,7 @@ const useWhitelist = ({ wallet, publicKey }: WhiteListProps) => {
     return provider;
   };
 
-  const fetchData = async (publicKey: web3.PublicKey) => {
+  const fetchData = async () => {
     const provider = getProvider();
 
     const counterProgram = new Program(
@@ -54,20 +55,19 @@ const useWhitelist = ({ wallet, publicKey }: WhiteListProps) => {
       provider
     );
     const [counterPDA] = web3.PublicKey.findProgramAddressSync(
-      [Buffer.from(utils.bytes.utf8.encode("counter")), publicKey.toBuffer()],
+      [Buffer.from(utils.bytes.utf8.encode("counter")), publicKey!.toBuffer()],
       counterProgramID
     );
 
     try {
       const counter = await counterProgram.account.counter.fetch(counterPDA);
-      console.log((counter as any).count.toNumber());
-      return counter;
+      return (counter as any).count.toNumber();
     } catch (err) {
       console.log(err);
     }
   };
 
-  const InitializeCounter = async (publicKey: web3.PublicKey) => {
+  const InitializeCounter = async () => {
     const provider = getProvider();
 
     const counterProgram = new Program(
@@ -85,7 +85,7 @@ const useWhitelist = ({ wallet, publicKey }: WhiteListProps) => {
     console.log(whitelist.publicKey.toString());
 
     let [counterPDA, counterBump] = web3.PublicKey.findProgramAddressSync(
-      [Buffer.from(utils.bytes.utf8.encode("counter")), publicKey.toBuffer()],
+      [Buffer.from(utils.bytes.utf8.encode("counter")), publicKey!.toBuffer()],
       counterProgram.programId
     );
 
@@ -128,25 +128,25 @@ const useWhitelist = ({ wallet, publicKey }: WhiteListProps) => {
     }
   };
 
-  const initContract = async (publicKey: web3.PublicKey) => {
+  const initContract = async () => {
     try {
-      const walletAddress = publicKey.toBase58();
+      const walletAddress = publicKey!.toBase58();
       if (!walletAddress) throw new Error("Wallet not connected!");
-      await InitializeCounter(publicKey);
+      await InitializeCounter();
     } catch (err) {
       console.log(err);
     }
   };
 
-  const addToWhiteList = async (publicKey: web3.PublicKey) => {
+  const addToWhiteList = async () => {
     const provider = getProvider();
     const counterProgram = new Program(
       counterProgramInterface,
       counterProgramID,
       provider
     ) as Program<Counter>;
-    const [counterPDA] = await web3.PublicKey.findProgramAddressSync(
-      [Buffer.from(utils.bytes.utf8.encode("counter")), publicKey.toBuffer()],
+    const [counterPDA] = web3.PublicKey.findProgramAddressSync(
+      [Buffer.from(utils.bytes.utf8.encode("counter")), publicKey!.toBuffer()],
       counterProgramID
     );
     console.log("counter PDA =>", counterPDA.toBase58());
@@ -157,15 +157,15 @@ const useWhitelist = ({ wallet, publicKey }: WhiteListProps) => {
     );
     console.log("money is : ", money, whitelist.publicKey.toBase58());
     try {
-      const [PDA, _] = await web3.PublicKey.findProgramAddressSync(
-        [whitelist.publicKey.toBuffer(), publicKey.toBuffer()],
+      const [PDA, _] = web3.PublicKey.findProgramAddressSync(
+        [whitelist.publicKey.toBuffer(), publicKey!.toBuffer()],
         whitelistProgramID
       );
 
       await counterProgram.methods
-        .addOrRemove(publicKey, false)
+        .addOrRemove(publicKey!, false)
         .accounts({
-          authority: publicKey,
+          authority: publicKey!,
           counter: counterPDA,
           pdaId: PDA,
           whitelisting: whitelist.publicKey,
@@ -177,7 +177,7 @@ const useWhitelist = ({ wallet, publicKey }: WhiteListProps) => {
 
       const counter = await counterProgram.account.counter.fetch(counterPDA);
       console.log("now counter => ", counter);
-      console.log("Adding address", publicKey.toString(), "to the whitelist");
+      console.log("Adding address", publicKey!.toString(), "to the whitelist");
     } catch (err) {
       console.log(err);
     }

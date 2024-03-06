@@ -1,21 +1,22 @@
 "use client";
 
 import React, { useEffect, useMemo, useState } from "react";
-import { Keypair } from "@solana/web3.js";
 import localFont from "next/font/local";
 import WalletModal from "./WalletModal";
 import { useAnchorWallet, useWallet } from "@solana/wallet-adapter-react";
 import useWhitelist from "@/hooks/useWhitelist";
+import { LiaTelegramPlane } from "react-icons/lia";
 
 const Horizon = localFont({ src: "../../assets/Horizon.otf" });
 
 export default function MainSection() {
-  const { connected, wallets, select, publicKey } = useWallet();
+  const { connected, wallets, select, publicKey, disconnect } = useWallet();
   const wallet = useAnchorWallet();
   const { addToWhiteList, initContract, fetchData } = useWhitelist({
     wallet,
     publicKey,
   });
+  const [isWhitelisted, setIsWhiteListed] = useState<boolean>(false);
 
   const walletAddress = useMemo(() => {
     if (!publicKey) return "";
@@ -23,19 +24,33 @@ export default function MainSection() {
   }, [publicKey]);
 
   const handleClick = async () => {
+    if (isWhitelisted) {
+      disconnect();
+      setIsWhiteListed(false);
+      return;
+    }
     if (!connected) {
       select(wallets[0].adapter.name);
       return;
     }
-    await initContract(publicKey!);
-    await addToWhiteList(publicKey!);
-    await fetchData(publicKey!);
+    await initContract();
+    await addToWhiteList();
+    await fetchData();
+  };
+
+  const handleFetchData = async () => {
+    const counter = await fetchData();
+    if (Number(counter) === 1) {
+      setIsWhiteListed(true);
+      return;
+    }
+    setIsWhiteListed(false);
   };
 
   useEffect(() => {
     if (!connected) return;
-    fetchData(publicKey!);
-  }, [publicKey]);
+    handleFetchData();
+  }, [connected, walletAddress]);
 
   return (
     <div
@@ -64,7 +79,11 @@ export default function MainSection() {
               className="absolute text-xl sm:text-3xl lg:text-xl xl:text-2xl 2xl:text-3xl"
               onClick={handleClick}
             >
-              {connected ? "RING STASH" : "Connect"}
+              {isWhitelisted
+                ? "Disconnect"
+                : connected
+                ? "RING STASH"
+                : "Connect"}
             </button>
             {connected ? (
               <img src="/images/ring-stash-btn.png" />
@@ -72,14 +91,20 @@ export default function MainSection() {
               <img src="/images/connect-btn.png" />
             )}
           </div>
-          <div className="flex flex-col items-center gap-2">
-            <div className="uppercase text-base sm:text-2xl md:text-3xl lg:text-xl xl:text-2xl 2xl:text-3xl font-bold text-center">
-              {!connected ? "WE ARE THE GENERATION" : "REGISTER NOW"}
+          {!isWhitelisted ? (
+            <div className="flex flex-col items-center gap-2">
+              <div className="uppercase text-base sm:text-2xl md:text-3xl lg:text-xl xl:text-2xl 2xl:text-3xl font-bold text-center">
+                {!connected ? "WE ARE THE GENERATION" : "REGISTER NOW"}
+              </div>
+              <div className="uppercase text-sm sm:text-lg md:text-2xl lg:text-lg xl:text-xl 2xl:text-2xl text-center">
+                {!connected ? "DNT FK IT UP" : "earn rings - dnt fk it up"}
+              </div>
             </div>
-            <div className="uppercase text-sm sm:text-lg md:text-2xl lg:text-lg xl:text-xl 2xl:text-2xl text-center">
-              {!connected ? "DNT FK IT UP" : "earn rings - dnt fk it up"}
+          ) : (
+            <div className="bg-[#FF04C8] rounded-full p-4">
+              <LiaTelegramPlane color="white" size={65} />
             </div>
-          </div>
+          )}
         </div>
       </div>
       <WalletModal />
