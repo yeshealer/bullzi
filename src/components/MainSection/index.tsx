@@ -1,52 +1,45 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
+import { Keypair } from "@solana/web3.js";
 import localFont from "next/font/local";
 import WalletModal from "./WalletModal";
+import { useAnchorWallet, useWallet } from "@solana/wallet-adapter-react";
+import useWhitelist from "@/hooks/useWhitelist";
 
-const Horizon = localFont({ src: "./Horizon.otf" });
+const Horizon = localFont({ src: "../../assets/Horizon.otf" });
 
 export default function MainSection() {
-  const [walletAddress, setWalletAddress] = useState<string>("");
+  const { connected, wallets, select, publicKey } = useWallet();
+  const wallet = useAnchorWallet();
+  const { addToWhiteList, initContract, fetchData } = useWhitelist({
+    wallet,
+    publicKey,
+  });
 
-  const handleConnect = async () => {
-    try {
-      const { solana }: any = window;
-      if (solana) {
-        if (solana.isPhantom) {
-          const response = await solana.connect({ onlyIfTrusted: false });
-          setWalletAddress(response.publicKey.toString());
-        } else {
-          alert("Please install phantom wallet");
-        }
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
-  const handleDisconnect = async () => {
-    try {
-      const { solana }: any = window;
-      const response = await solana.disconnect();
-      setWalletAddress("");
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  const walletAddress = useMemo(() => {
+    if (!publicKey) return "";
+    return publicKey.toBase58();
+  }, [publicKey]);
+
   const handleClick = async () => {
-    if (!isConnected) {
-      await handleConnect();
-    } else {
+    if (!connected) {
+      select(wallets[0].adapter.name);
+      return;
     }
+    await initContract(publicKey!);
+    await addToWhiteList(publicKey!);
+    await fetchData(publicKey!);
   };
-  const isConnected = useMemo(() => {
-    if (walletAddress === "") return false;
-    return true;
-  }, [walletAddress]);
+
+  useEffect(() => {
+    if (!connected) return;
+    fetchData(publicKey!);
+  }, [publicKey]);
 
   return (
     <div
-      className={`z-20 relative flex flex-col lg:flex-row items-center min-h-screen justify-between gap-0 lg:gap-20 py-10 ${Horizon.className}`}
+      className={`z-40 relative flex flex-col lg:flex-row items-center min-h-screen justify-between gap-0 lg:gap-20 py-10 text-white ${Horizon.className}`}
     >
       <div className="flex-1 flex justify-end z-10">
         <img
@@ -71,9 +64,9 @@ export default function MainSection() {
               className="absolute text-xl sm:text-3xl lg:text-xl xl:text-2xl 2xl:text-3xl"
               onClick={handleClick}
             >
-              {isConnected ? "RING STASH" : "Connect"}
+              {connected ? "RING STASH" : "Connect"}
             </button>
-            {isConnected ? (
+            {connected ? (
               <img src="/images/ring-stash-btn.png" />
             ) : (
               <img src="/images/connect-btn.png" />
@@ -81,10 +74,10 @@ export default function MainSection() {
           </div>
           <div className="flex flex-col items-center gap-2">
             <div className="uppercase text-base sm:text-2xl md:text-3xl lg:text-xl xl:text-2xl 2xl:text-3xl font-bold text-center">
-              WE ARE THE GENERATION
+              {!connected ? "WE ARE THE GENERATION" : "REGISTER NOW"}
             </div>
             <div className="uppercase text-sm sm:text-lg md:text-2xl lg:text-lg xl:text-xl 2xl:text-2xl text-center">
-              DNT FK IT UP
+              {!connected ? "DNT FK IT UP" : "earn rings - dnt fk it up"}
             </div>
           </div>
         </div>
