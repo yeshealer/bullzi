@@ -54,7 +54,7 @@ export default function MainSection() {
     >
       <div className="flex-1 flex justify-end z-10">
         {isWhitelisted ? (
-          <div className="backdrop-blur-sm min-w-[350px] sm:min-w-[520px] md:min-w-[650px] lg:min-w-[480px] xl:min-w-[550px] 2xl:min-w-[650px] w-[75%] h-[450px] sm:h-[550px] md:h-[600px] lg:h-[520px] xl:h-[575px] 2xl:h-[600px] flex flex-col items-center justify-between">
+          <div className="backdrop-blur-sm min-w-[350px] sm:min-w-[520px] md:min-w-[650px] lg:min-w-[480px] xl:min-w-[550px] 2xl:min-w-[650px] w-[75%] h-[360px] sm:h-[450px] md:h-[550px] lg:h-[470px] xl:h-[525px] 2xl:h-[600px] flex flex-col items-center justify-between">
             <div className="bg-black/70 w-full h-[48%] rounded-3xl p-4 md:p-10">
               <div className="text-center flex flex-col items-center justify-between h-full">
                 <div className="text-xl sm:text-2xl md:text-3xl lg:text-2xl 2xl:text-3xl tracking-widest">
@@ -119,7 +119,7 @@ export default function MainSection() {
           isWhitelisted ? "mt-4" : "-mt-10"
         } lg:mt-0 justify-center flex`}
       >
-        <div className="bg-black/70 backdrop-blur-sm min-w-[350px] sm:min-w-[520px] md:min-w-[650px] lg:min-w-[480px] xl:min-w-[550px] 2xl:min-w-[650px] w-[75%] h-[450px] sm:h-[550px] md:h-[600px] lg:h-[520px] xl:h-[575px] 2xl:h-[600px] rounded-3xl p-6 py-10 lg:py-16 flex flex-col items-center justify-between">
+        <div className="bg-black/70 backdrop-blur-sm min-w-[350px] sm:min-w-[520px] md:min-w-[650px] lg:min-w-[480px] xl:min-w-[550px] 2xl:min-w-[650px] w-[75%] h-[360px] sm:h-[450px] md:h-[550px] lg:h-[470px] xl:h-[525px] 2xl:h-[600px] rounded-3xl p-6 py-10 lg:py-16 flex flex-col items-center justify-between">
           <div className="flex flex-col items-center gap-2">
             <div className="text-6xl sm:text-7xl md:text-8xl lg:text-7xl 2xl:text-8xl font-bold">
               BULLZI
@@ -144,10 +144,10 @@ export default function MainSection() {
           </div>
           {!isWhitelisted ? (
             <div className="flex flex-col items-center gap-2 h-[80px]">
-              <div className="uppercase text-base sm:text-2xl md:text-3xl lg:text-xl xl:text-2xl 2xl:text-3xl font-bold text-center">
+              <div className="uppercase text-[15px] sm:text-2xl md:text-3xl lg:text-xl xl:text-2xl 2xl:text-3xl font-bold text-center">
                 {!connected ? "WE ARE THE GENERATION" : "REGISTER NOW"}
               </div>
-              <div className="uppercase text-sm sm:text-lg md:text-2xl lg:text-lg xl:text-xl 2xl:text-2xl text-center">
+              <div className="uppercase text-[12px] sm:text-lg md:text-2xl lg:text-lg xl:text-xl 2xl:text-2xl text-center">
                 {!connected ? "DNT FK IT UP" : "earn rings - dnt fk it up"}
               </div>
             </div>
