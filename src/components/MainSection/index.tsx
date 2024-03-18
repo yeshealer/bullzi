@@ -28,19 +28,10 @@ export default function MainSection() {
 
   const handleClick = async () => {
     if (isWhitelisted) {
-      disconnect();
       setIsWhiteListed(false);
       return;
     }
-    if (!connected) {
-      select(wallets[0].adapter.name);
-      return;
-    }
-    // await signCustomMessage();
     setIsWhiteListed(true);
-    // await initContract();
-    // await addToWhiteList();
-    // await fetchData();
   };
 
   const handleFetchData = async () => {
@@ -63,7 +54,7 @@ export default function MainSection() {
     >
       <div className="flex-1 flex justify-end z-10">
         {isWhitelisted ? (
-          <div className="backdrop-blur-sm min-w-[360px] sm:min-w-[520px] md:min-w-[650px] lg:min-w-[480px] xl:min-w-[550px] 2xl:min-w-[650px] w-[75%] h-[450px] sm:h-[550px] md:h-[600px] lg:h-[520px] xl:h-[600px] 2xl:h-[640px] flex flex-col items-center justify-between">
+          <div className="backdrop-blur-sm min-w-[350px] sm:min-w-[520px] md:min-w-[650px] lg:min-w-[480px] xl:min-w-[550px] 2xl:min-w-[650px] w-[75%] h-[450px] sm:h-[550px] md:h-[600px] lg:h-[520px] xl:h-[600px] 2xl:h-[640px] flex flex-col items-center justify-between">
             <div className="bg-black/70 w-full h-[48%] rounded-3xl p-10">
               <div className="text-center flex flex-col items-center justify-between h-full">
                 <div className="text-xl sm:text-2xl md:text-3xl lg:text-2xl 2xl:text-3xl tracking-widest">
@@ -123,8 +114,12 @@ export default function MainSection() {
           />
         )}
       </div>
-      <div className={`flex-1 ${isWhitelisted ? "mt-4" : "-mt-10"} lg:mt-0`}>
-        <div className="bg-black/70 backdrop-blur-sm min-w-[360px] sm:min-w-[520px] md:min-w-[650px] lg:min-w-[480px] xl:min-w-[550px] 2xl:min-w-[650px] w-[75%] h-[450px] sm:h-[550px] md:h-[600px] lg:h-[520px] xl:h-[600px] 2xl:h-[640px] rounded-3xl p-6 py-10 lg:py-20 flex flex-col items-center justify-around">
+      <div
+        className={`flex-1 ${
+          isWhitelisted ? "mt-4" : "-mt-10"
+        } lg:mt-0 justify-center flex`}
+      >
+        <div className="bg-black/70 backdrop-blur-sm min-w-[350px] sm:min-w-[520px] md:min-w-[650px] lg:min-w-[480px] xl:min-w-[550px] 2xl:min-w-[650px] w-[75%] h-[450px] sm:h-[550px] md:h-[600px] lg:h-[520px] xl:h-[575px] 2xl:h-[600px] rounded-3xl p-6 py-10 lg:py-16 flex flex-col items-center justify-around">
           <div className="flex flex-col items-center gap-2">
             <div className="text-6xl sm:text-7xl md:text-8xl lg:text-7xl 2xl:text-8xl font-bold">
               BULLZI
@@ -135,19 +130,15 @@ export default function MainSection() {
           </div>
           <div className="cursor-pointer w-[280px] sm:w-[360px] md:w-[420px] lg:w-[320px] xl:w-[360px] 2xl:w-[420px] h-[180px] relative flex items-center justify-center">
             <button
-              className={`text-xl sm:text-3xl lg:text-xl xl:text-2xl 2xl:text-3xl ${
-                !connected
+              className={`text-xl sm:text-3xl lg:text-xl 2xl:text-2xl ${
+                !isWhitelisted
                   ? "bg-[#24FF00] btn-box-shadow-green"
                   : "bg-[#FF04C8] btn-box-shadow-purple"
-              } py-1.5 px-1.5 rounded-xl`}
+              } rounded-xl`}
               onClick={handleClick}
             >
-              <div className="border border-4 border-white min-w-[350px] py-3 rounded-xl">
-                {isWhitelisted
-                  ? "Disconnect"
-                  : connected
-                  ? "Whitelist"
-                  : "Connect"}
+              <div className="border border-2 border-white min-w-[280px] sm:min-w-[350px] py-3 rounded-xl">
+                {isWhitelisted ? "Disconnect" : "Whitelist"}
               </div>
             </button>
           </div>

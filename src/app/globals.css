@@ -16,20 +16,15 @@
   }
 }
 
-.btn-box-shadow-green,
-.btn-box-shadow-purple {
-  -webkit-text-stroke: 1px black;
-}
-
-.btn-box-shadow-green:hover {
-  box-shadow: 0 0 5px #24ff00, 0 0 10px #24ff00, 0 0 15px #24ff00,
-    0 0 40px #24ff00;
+.btn-box-shadow-green {
+  box-shadow: 0 0 2.5px #24ff00, 0 0 5px #24ff00, 0 0 10px #24ff00,
+    0 0 20px #24ff00;
   transition: all 500ms;
 }
 
-.btn-box-shadow-purple:hover {
-  box-shadow: 0 0 5px #ff04c8, 0 0 10px #ff04c8, 0 0 15px #ff04c8,
-    0 0 40px #ff04c8;
+.btn-box-shadow-purple {
+  box-shadow: 0 0 2.5px #ff04c8, 0 0 5px #ff04c8, 0 0 10px #ff04c8,
+    0 0 20px #ff04c8;
   transition: all 500ms;
 }
 
