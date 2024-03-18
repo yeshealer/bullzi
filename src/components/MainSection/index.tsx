@@ -54,7 +54,7 @@ export default function MainSection() {
     >
       <div className="flex-1 flex justify-end z-10">
         {isWhitelisted ? (
-          <div className="backdrop-blur-sm min-w-[350px] sm:min-w-[520px] md:min-w-[650px] lg:min-w-[480px] xl:min-w-[550px] 2xl:min-w-[650px] w-[75%] h-[450px] sm:h-[550px] md:h-[600px] lg:h-[520px] xl:h-[600px] 2xl:h-[640px] flex flex-col items-center justify-between">
+          <div className="backdrop-blur-sm min-w-[350px] sm:min-w-[520px] md:min-w-[650px] lg:min-w-[480px] xl:min-w-[550px] 2xl:min-w-[650px] w-[75%] h-[450px] sm:h-[550px] md:h-[600px] lg:h-[520px] xl:h-[575px] 2xl:h-[600px] flex flex-col items-center justify-between">
             <div className="bg-black/70 w-full h-[48%] rounded-3xl p-10">
               <div className="text-center flex flex-col items-center justify-between h-full">
                 <div className="text-xl sm:text-2xl md:text-3xl lg:text-2xl 2xl:text-3xl tracking-widest">
