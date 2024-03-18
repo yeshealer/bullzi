@@ -9,8 +9,10 @@ import {
   whitelistProgramInterface,
   endpoint,
 } from "@/api/utils/constants";
-import { AnchorWallet } from "@solana/wallet-adapter-react";
-import kp from "@/api/idl/keypair.json";
+import { AnchorWallet, useWallet } from "@solana/wallet-adapter-react";
+import { signIn } from "next-auth/react";
+import base58 from "bs58";
+import { useAuthRequestChallengeSolana } from "@moralisweb3/next";
 
 interface WhiteListProps {
   wallet: AnchorWallet | undefined;
@@ -32,9 +34,8 @@ async function airdrop(connection, destinationWallet, amount) {
 }
 
 const useWhitelist = ({ wallet, publicKey }: WhiteListProps) => {
-  // const arr = Object.values(kp._keypair.secretKey);
-  // const secret = new Uint8Array(arr);
-  // const whitelist = web3.Keypair.fromSecretKey(secret);
+  const { signMessage, disconnect } = useWallet();
+  const { requestChallengeAsync, error } = useAuthRequestChallengeSolana();
 
   const whitelist = web3.Keypair.generate();
 
@@ -183,10 +184,44 @@ const useWhitelist = ({ wallet, publicKey }: WhiteListProps) => {
     }
   };
 
+  const signCustomMessage = async () => {
+    if (!publicKey) {
+      throw new Error("Wallet not avaiable to process request.");
+    }
+    const address = publicKey.toBase58();
+    const challenge = await requestChallengeAsync({
+      address,
+      network: "devnet",
+    });
+    const encodedMessage = new TextEncoder().encode(challenge?.message);
+    if (!encodedMessage) {
+      throw new Error("Failed to get encoded message.");
+    }
+
+    const signedMessage = await signMessage?.(encodedMessage);
+    const signature = base58.encode(signedMessage as Uint8Array);
+    try {
+      const authResponse = await signIn("moralis-auth", {
+        message: challenge?.message,
+        signature,
+        network: "Solana",
+        redirect: false,
+      });
+      if (authResponse?.error) {
+        throw new Error(authResponse.error);
+      }
+    } catch (e) {
+      disconnect();
+      console.log(e);
+      return;
+    }
+  };
+
   return {
     addToWhiteList,
     initContract,
     fetchData,
+    signCustomMessage,
   };
 };
 
