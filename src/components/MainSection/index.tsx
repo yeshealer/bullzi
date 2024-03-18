@@ -55,7 +55,7 @@ export default function MainSection() {
       <div className="flex-1 flex justify-end z-10">
         {isWhitelisted ? (
           <div className="backdrop-blur-sm min-w-[350px] sm:min-w-[520px] md:min-w-[650px] lg:min-w-[480px] xl:min-w-[550px] 2xl:min-w-[650px] w-[75%] h-[450px] sm:h-[550px] md:h-[600px] lg:h-[520px] xl:h-[575px] 2xl:h-[600px] flex flex-col items-center justify-between">
-            <div className="bg-black/70 w-full h-[48%] rounded-3xl p-10">
+            <div className="bg-black/70 w-full h-[48%] rounded-3xl p-4 md:p-10">
               <div className="text-center flex flex-col items-center justify-between h-full">
                 <div className="text-xl sm:text-2xl md:text-3xl lg:text-2xl 2xl:text-3xl tracking-widest">
                   GET READY
@@ -76,25 +76,25 @@ export default function MainSection() {
                 </div>
               </div>
             </div>
-            <div className="bg-black/70 w-full h-[48%] rounded-3xl flex flex-col items-center justify-between p-10">
-              <div className="flex items-center justify-between w-full">
-                <div className="flex flex-col items-center text-sm gap-1">
-                  <img src="/images/3.png" width={"60px"} height={"60px"} />
+            <div className="bg-black/70 w-full h-[48%] rounded-3xl flex justify-between p-4 md:p-10">
+              <div className="flex flex-col items-center justify-between h-full">
+                <div className="flex flex-col items-center text-sm gap-1 -mt-4">
+                  <img src="/images/3.png" width={"70px"} height={"70px"} />
                   <div className="tracking-widest">READ ME</div>
                 </div>
-                <div className="flex flex-col items-center text-sm gap-4">
-                  <div className="text-[#24FF00] text-3xl font-bold font-mono">
-                    0.00
-                  </div>
-                  <div className="tracking-widest">STOKEN</div>
-                </div>
-              </div>
-              <div className="flex items-center justify-between w-full">
                 <div className="flex flex-col items-center text-sm gap-4">
                   <div className="text-[#FF04C8] text-3xl font-bold font-mono">
                     0.00
                   </div>
                   <div className="tracking-widest">RINGS</div>
+                </div>
+              </div>
+              <div className="flex flex-col items-center justify-between h-full">
+                <div className="flex flex-col items-center text-sm gap-4">
+                  <div className="text-[#24FF00] text-3xl font-bold font-mono">
+                    0.00
+                  </div>
+                  <div className="tracking-widest">STOKEN</div>
                 </div>
                 <div className="flex flex-col items-center text-sm gap-4">
                   <div className="text-[#24FF00] text-3xl font-bold font-mono">
