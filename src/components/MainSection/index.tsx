@@ -52,74 +52,88 @@ export default function MainSection() {
     <div
       className={`z-40 relative flex flex-col lg:flex-row items-center min-h-screen justify-between gap-0 lg:gap-20 py-4 lg:py-10 text-white ${Horizon.className}`}
     >
-      <div className="flex-1 flex justify-end z-10">
+      <div className="flex-1 flex justify-end z-10 h-full">
         {isWhitelisted ? (
-          <div className="backdrop-blur-sm min-w-[350px] sm:min-w-[520px] md:min-w-[650px] lg:min-w-[480px] xl:min-w-[550px] 2xl:min-w-[650px] w-[75%] h-[360px] sm:h-[450px] md:h-[550px] lg:h-[470px] xl:h-[525px] 2xl:h-[600px] flex flex-col items-center justify-between">
-            <div className="bg-black/70 w-full h-[48%] rounded-3xl p-4 md:p-10">
+          <div className="backdrop-blur-sm min-w-[350px] sm:min-w-[520px] md:min-w-[650px] lg:min-w-[480px] xl:min-w-[550px] 2xl:min-w-[650px] w-[75%] h-full lg:h-[470px] xl:h-[525px] 2xl:h-[600px] flex flex-col items-center justify-between gap-2">
+            <div className="bg-black/70 w-full h-[150px] sm:h-[250px] lg:h-[48%] rounded-3xl p-4 md:p-10">
               <div className="text-center flex flex-col items-center justify-between h-full">
                 <div className="text-xl sm:text-2xl md:text-3xl lg:text-2xl 2xl:text-3xl tracking-widest">
                   GET READY
                 </div>
                 <div className="w-full justify-between flex">
-                  <div className="gap-4 flex flex-col items-center">
-                    <div className="text-[#24FF00] text-3xl font-bold font-mono">
+                  <div className="gap-2 sm:gap-4 flex flex-col items-center">
+                    <div className="text-[#24FF00] text-2xl md:text-3xl font-bold font-mono">
                       0.00
                     </div>
-                    <div className="tracking-widest text-sm">REFERAL</div>
+                    <div className="tracking-widest text-xs sm:text-sm">
+                      REFERAL
+                    </div>
                   </div>
-                  <div className="gap-4 flex flex-col items-center">
-                    <div className="text-[#FF04C8] text-3xl font-bold font-mono">
+                  <div className="gap-2 sm:gap-4 flex flex-col items-center">
+                    <div className="text-[#FF04C8] text-2xl md:text-3xl font-bold font-mono">
                       0.00
                     </div>
-                    <div className="tracking-widest text-sm">RINGS</div>
+                    <div className="tracking-widest text-xs sm:text-sm">
+                      RINGS
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="bg-black/70 w-full h-[48%] rounded-3xl flex justify-between p-4 md:p-10">
+            <div className="bg-black/70 w-full h-[150px] sm:h-[250px] lg:h-[48%] rounded-3xl flex justify-between p-4 md:p-10">
               <div className="flex flex-col items-center justify-between h-full">
                 <div className="flex flex-col items-center text-sm gap-1 -mt-4">
                   <img src="/images/3.png" width={"70px"} height={"70px"} />
-                  <div className="tracking-widest">READ ME</div>
+                  <div className="tracking-widest text-xs sm:text-sm">
+                    READ ME
+                  </div>
                 </div>
-                <div className="flex flex-col items-center text-sm gap-4">
-                  <div className="text-[#FF04C8] text-3xl font-bold font-mono">
+                <div className="flex flex-col items-center text-sm gap-2 sm:gap-4">
+                  <div className="text-[#FF04C8] text-2xl md:text-3xl font-bold font-mono">
                     0.00
                   </div>
-                  <div className="tracking-widest">RINGS</div>
+                  <div className="tracking-widest text-xs sm:text-sm">
+                    RINGS
+                  </div>
                 </div>
               </div>
               <div className="flex flex-col items-center justify-between h-full">
-                <div className="flex flex-col items-center text-sm gap-4">
-                  <div className="text-[#24FF00] text-3xl font-bold font-mono">
+                <div className="flex flex-col items-center text-sm gap-2 sm:gap-4">
+                  <div className="text-[#24FF00] text-2xl md:text-3xl font-bold font-mono">
                     0.00
                   </div>
-                  <div className="tracking-widest">STOKEN</div>
+                  <div className="tracking-widest text-xs sm:text-sm">
+                    STOKEN
+                  </div>
                 </div>
-                <div className="flex flex-col items-center text-sm gap-4">
-                  <div className="text-[#24FF00] text-3xl font-bold font-mono">
+                <div className="flex flex-col items-center text-sm gap-2 sm:gap-4">
+                  <div className="text-[#24FF00] text-2xl md:text-3xl font-bold font-mono">
                     0.00
                   </div>
-                  <div className="tracking-widest">LOCKED</div>
+                  <div className="tracking-widest text-xs sm:text-sm">
+                    LOCKED
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         ) : (
-          <img
-            src={"/images/banner.png"}
-            className="min-w-[300px] min-h-[300px] w-[340px] sm:w-[400px] md:w-[550px] lg:w-[450px] xl:w-[550px] 2xl:w-[600px]"
-            alt="banner image"
-            draggable={false}
-          />
+          <div className="aspect-square">
+            <img
+              src={"/images/banner.png"}
+              className="min-w-[300px] min-h-[300px] w-[340px] sm:w-[400px] md:w-[550px] lg:w-[450px] xl:w-[550px] 2xl:w-[600px]"
+              alt="banner image"
+              draggable={false}
+            />
+          </div>
         )}
       </div>
       <div
         className={`flex-1 ${
-          isWhitelisted ? "mt-4" : "-mt-10"
+          isWhitelisted ? "-mt-6 sm:mt-2" : "-mt-28"
         } lg:mt-0 justify-center flex`}
       >
-        <div className="bg-black/70 backdrop-blur-sm min-w-[350px] sm:min-w-[520px] md:min-w-[650px] lg:min-w-[480px] xl:min-w-[550px] 2xl:min-w-[650px] w-[75%] h-[360px] sm:h-[450px] md:h-[550px] lg:h-[470px] xl:h-[525px] 2xl:h-[600px] rounded-3xl p-6 py-10 lg:py-16 flex flex-col items-center justify-between">
+        <div className="bg-black/70 backdrop-blur-sm min-w-[350px] sm:min-w-[520px] md:min-w-[650px] lg:min-w-[480px] xl:min-w-[550px] 2xl:min-w-[650px] w-[75%] h-full lg:h-[470px] xl:h-[525px] 2xl:h-[600px] rounded-3xl p-6 lg:py-16 flex flex-col items-center justify-between gap-6">
           <div className="flex flex-col items-center gap-2">
             <div className="text-6xl sm:text-7xl md:text-8xl lg:text-7xl 2xl:text-8xl font-bold">
               BULLZI
@@ -128,22 +142,22 @@ export default function MainSection() {
               #BULLZIMOVES
             </div>
           </div>
-          <div className="cursor-pointer w-[280px] sm:w-[360px] md:w-[420px] lg:w-[320px] xl:w-[360px] 2xl:w-[420px] h-[180px] relative flex items-center justify-center">
+          <div className="cursor-pointer w-[280px] sm:w-[360px] md:w-[420px] lg:w-[320px] xl:w-[360px] 2xl:w-[420px] h-full relative flex items-center justify-center">
             <button
-              className={`text-xl sm:text-3xl lg:text-xl 2xl:text-2xl ${
+              className={`text-lg sm:text-3xl lg:text-xl 2xl:text-2xl ${
                 !isWhitelisted
                   ? "bg-[#24FF00] btn-box-shadow-green"
                   : "bg-[#FF04C8] btn-box-shadow-purple"
               } rounded-xl`}
               onClick={handleClick}
             >
-              <div className="border border-2 border-white min-w-[280px] sm:min-w-[350px] py-3 rounded-xl">
+              <div className="border-2 border-white min-w-[250px] sm:min-w-[350px] py-3 rounded-xl">
                 {isWhitelisted ? "Disconnect" : "Whitelist"}
               </div>
             </button>
           </div>
           {!isWhitelisted ? (
-            <div className="flex flex-col items-center gap-2 h-[60px] sm:h-[80px]">
+            <div className="flex flex-col items-center gap-2 h-[65px] sm:h-[80px]">
               <div className="uppercase text-[15px] sm:text-2xl md:text-3xl lg:text-xl xl:text-2xl 2xl:text-3xl font-bold text-center">
                 {!connected ? "WE ARE THE GENERATION" : "REGISTER NOW"}
               </div>
@@ -152,9 +166,12 @@ export default function MainSection() {
               </div>
             </div>
           ) : (
-            <div className="h-[60px] sm:h-[80px]">
+            <div className="h-[65px] sm:h-[80px]">
               <div className="bg-[#FF04C8] rounded-full p-4">
-                <LiaTelegramPlane color="white" className="w-[30px] w-[45px] h-[30px] sm:h-[45px]" />
+                <LiaTelegramPlane
+                  color="white"
+                  className="w-[30px] sm:w-[45px] h-[30px] sm:h-[45px]"
+                />
               </div>
             </div>
           )}
