@@ -130,7 +130,7 @@ export default function MainSection() {
       </div>
       <div
         className={`flex-1 ${
-          isWhitelisted ? "-mt-6 sm:mt-2" : "-mt-28"
+          isWhitelisted ? "-mt-16 sm:mt-2" : "-mt-28"
         } lg:mt-0 justify-center flex`}
       >
         <div className="bg-black/70 backdrop-blur-sm min-w-[350px] sm:min-w-[520px] md:min-w-[650px] lg:min-w-[480px] xl:min-w-[550px] 2xl:min-w-[650px] w-[75%] h-full lg:h-[470px] xl:h-[525px] 2xl:h-[600px] rounded-3xl p-6 lg:py-16 flex flex-col items-center justify-between gap-6">
