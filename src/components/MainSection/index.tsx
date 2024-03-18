@@ -50,7 +50,7 @@ export default function MainSection() {
 
   return (
     <div
-      className={`z-40 relative flex flex-col lg:flex-row items-center min-h-screen justify-between gap-0 lg:gap-20 py-10 text-white ${Horizon.className}`}
+      className={`z-40 relative flex flex-col lg:flex-row items-center min-h-screen justify-between gap-0 lg:gap-20 py-4 lg:py-10 text-white ${Horizon.className}`}
     >
       <div className="flex-1 flex justify-end z-10">
         {isWhitelisted ? (
