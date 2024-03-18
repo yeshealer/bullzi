@@ -143,7 +143,7 @@ export default function MainSection() {
             </button>
           </div>
           {!isWhitelisted ? (
-            <div className="flex flex-col items-center gap-2 h-[80px]">
+            <div className="flex flex-col items-center gap-2 h-[60px] sm:h-[80px]">
               <div className="uppercase text-[15px] sm:text-2xl md:text-3xl lg:text-xl xl:text-2xl 2xl:text-3xl font-bold text-center">
                 {!connected ? "WE ARE THE GENERATION" : "REGISTER NOW"}
               </div>
@@ -152,9 +152,9 @@ export default function MainSection() {
               </div>
             </div>
           ) : (
-            <div className="h-[80px]">
+            <div className="h-[60px] sm:h-[80px]">
               <div className="bg-[#FF04C8] rounded-full p-4">
-                <LiaTelegramPlane color="white" size={45} />
+                <LiaTelegramPlane color="white" className="w-[30px] w-[45px] h-[30px] sm:h-[45px]" />
               </div>
             </div>
           )}
