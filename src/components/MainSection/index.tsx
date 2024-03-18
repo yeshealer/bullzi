@@ -78,8 +78,8 @@ export default function MainSection() {
             </div>
             <div className="bg-black/70 w-full h-[48%] rounded-3xl flex flex-col items-center justify-between p-10">
               <div className="flex items-center justify-between w-full">
-                <div className="flex flex-col items-center text-sm gap-4">
-                  <BsInfoSquareFill color="#24FF00" size={"30"} />
+                <div className="flex flex-col items-center text-sm gap-1">
+                  <img src="/images/3.png" width={"60px"} height={"60px"} />
                   <div className="tracking-widest">READ ME</div>
                 </div>
                 <div className="flex flex-col items-center text-sm gap-4">
@@ -119,7 +119,7 @@ export default function MainSection() {
           isWhitelisted ? "mt-4" : "-mt-10"
         } lg:mt-0 justify-center flex`}
       >
-        <div className="bg-black/70 backdrop-blur-sm min-w-[350px] sm:min-w-[520px] md:min-w-[650px] lg:min-w-[480px] xl:min-w-[550px] 2xl:min-w-[650px] w-[75%] h-[450px] sm:h-[550px] md:h-[600px] lg:h-[520px] xl:h-[575px] 2xl:h-[600px] rounded-3xl p-6 py-10 lg:py-16 flex flex-col items-center justify-around">
+        <div className="bg-black/70 backdrop-blur-sm min-w-[350px] sm:min-w-[520px] md:min-w-[650px] lg:min-w-[480px] xl:min-w-[550px] 2xl:min-w-[650px] w-[75%] h-[450px] sm:h-[550px] md:h-[600px] lg:h-[520px] xl:h-[575px] 2xl:h-[600px] rounded-3xl p-6 py-10 lg:py-16 flex flex-col items-center justify-between">
           <div className="flex flex-col items-center gap-2">
             <div className="text-6xl sm:text-7xl md:text-8xl lg:text-7xl 2xl:text-8xl font-bold">
               BULLZI
@@ -153,7 +153,7 @@ export default function MainSection() {
             </div>
           ) : (
             <div className="bg-[#FF04C8] rounded-full p-4">
-              <LiaTelegramPlane color="white" size={65} />
+              <LiaTelegramPlane color="white" size={45} />
             </div>
           )}
         </div>
