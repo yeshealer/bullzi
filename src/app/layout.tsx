@@ -7,7 +7,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "BULLZI",
-  description: "",
+  description: "#BULLZIMOVE YOURE STILL EARLY",
   icons:
     "https://res.cloudinary.com/pauloski/image/upload/v1710952504/pvd9fjruyjtuvnnjen0h.png",
 };

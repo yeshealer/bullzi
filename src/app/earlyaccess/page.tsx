@@ -8,11 +8,11 @@ const SignupPage = () => {
     <div>
       <Head>
         <title>BULLZI</title>
-        <desc>BULLZI #BULLZIMOVE YOURE STILL EARLY</desc>
+        <desc>#BULLZIMOVE YOURE STILL EARLY</desc>
         <meta property="og:title" content="BULLZI" key="title" />
         <meta
           property="og:description"
-          content="BULLZI #BULLZIMOVE YOURE STILL EARLY"
+          content="#BULLZIMOVE YOURE STILL EARLY"
           key={"description"}
         />
         <meta
