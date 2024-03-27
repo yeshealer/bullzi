@@ -7,7 +7,7 @@ export default function AdminPanelSection() {
 
   useEffect(() => {
     fetchAllInfo();
-  }, [fetchAllInfo]);
+  }, []);
 
   return (
     <div className="w-screen h-screen p-10 bg-green-400/50">
