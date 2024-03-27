@@ -5,14 +5,21 @@ import { Toaster } from "react-hot-toast";
 
 const inter = Inter({ subsets: ["latin"] });
 
-// export const metadata: Metadata = {
-//   title: "BULLZI",
-//   description: "#BULLZIMOVE YOURE STILL EARLY",
-//   icons:
-//     "https://res.cloudinary.com/pauloski/image/upload/v1710952504/pvd9fjruyjtuvnnjen0h.png",
-//   viewport:
-//     "width=device-width, initial-scale=1, shrink-to-fit=no",
-// };
+export const metadata: Metadata = {
+  title: "BULLZI",
+  description: "BULLZI #BULLZIMOVE YOURE STILL EARLY",
+  openGraph: {
+    images: [
+      "https://res.cloudinary.com/pauloski/image/upload/v1710952504/pvd9fjruyjtuvnnjen0h.png",
+    ],
+  },
+  twitter: {
+    images: [
+      "https://res.cloudinary.com/pauloski/image/upload/v1710952504/pvd9fjruyjtuvnnjen0h.png",
+    ],
+  },
+  viewport: "width=device-width, initial-scale=1, shrink-to-fit=no",
+};
 
 export default function RootLayout({
   children,
