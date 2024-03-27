@@ -11,7 +11,7 @@ const inter = Inter({ subsets: ["latin"] });
 //   icons:
 //     "https://res.cloudinary.com/pauloski/image/upload/v1710952504/pvd9fjruyjtuvnnjen0h.png",
 //   viewport:
-//     "https://res.cloudinary.com/pauloski/image/upload/v1710952504/pvd9fjruyjtuvnnjen0h.png",
+//     "width=device-width, initial-scale=1, shrink-to-fit=no",
 // };
 
 export default function RootLayout({
