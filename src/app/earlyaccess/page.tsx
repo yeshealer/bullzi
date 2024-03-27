@@ -1,8 +1,6 @@
 "use client";
 
 import LandingPage from "@/components/LandingPage";
-// import OpenGraphMetaTags from "./../../components/OpenGraphMetaTags";
-
 import { Helmet } from "react-helmet";
 
 const SignupPage = () => {
