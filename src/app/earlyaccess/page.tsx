@@ -1,12 +1,12 @@
 "use client";
 
 import LandingPage from "@/components/LandingPage";
-import Head from "next/head";
+import { Helmet } from "react-helmet";
 
 const SignupPage = () => {
   return (
     <div>
-      <Head>
+      <Helmet>
         <meta charSet="utf-8" />
         <title>BULLZI</title>
         <meta
@@ -33,7 +33,7 @@ const SignupPage = () => {
         <meta property="twitter:type" content="website" />
         <meta property="twitter:site_name" content="BULLZI" />
         <meta property="twitter:locale" content="en_US" />
-      </Head>
+      </Helmet>
       <LandingPage />;
     </div>
   );
