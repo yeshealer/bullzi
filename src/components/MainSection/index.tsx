@@ -12,7 +12,7 @@ import useWhiteList from "@/hooks/useWhitelist";
 const Horizon = localFont({ src: "../../assets/Horizon.otf" });
 
 export default function MainSection() {
-  const { connected, publicKey } = useWallet();
+  const { connected } = useWallet();
   const { saveAndFetchData, userDetails } = useWhiteList();
 
   const handleCopyReferralLink = () => {

@@ -20,7 +20,7 @@ const useWhiteList = () => {
   const searchParams = useSearchParams();
 
   const saved = useRef(false);
-  const [userDetails, setUserDetails] = useState<Iprops | UserInfoProps>();
+  const [userDetails, setUserDetails] = useState<Iprops & UserInfoProps>();
   const [allInfo, setAllInfo] = useState<UserInfoProps[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
