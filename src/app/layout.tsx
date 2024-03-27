@@ -6,6 +6,7 @@ import { Toaster } from "react-hot-toast";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://res.coudinary.com"),
   title: "BULLZI",
   description: "BULLZI #BULLZIMOVE YOURE STILL EARLY",
   openGraph: {
@@ -18,7 +19,6 @@ export const metadata: Metadata = {
       "https://res.cloudinary.com/pauloski/image/upload/v1710952504/pvd9fjruyjtuvnnjen0h.png",
     ],
   },
-  viewport: "width=device-width, initial-scale=1, shrink-to-fit=no",
 };
 
 export default function RootLayout({
