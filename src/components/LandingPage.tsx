@@ -20,16 +20,7 @@ const LandingPage = () => {
   // You can also provide a custom RPC endpoint.
   const endpoint = useMemo(() => clusterApiUrl(network), [network]);
 
-  const wallets = useMemo(
-    () => [
-      new PhantomWalletAdapter(),
-      // new SlopeWalletAdapter(),
-      // new CoinbaseWalletAdapter(),
-      // new SolflareWalletAdapter({ network }),
-      // new TorusWalletAdapter(),
-    ],
-    []
-  );
+  const wallets = useMemo(() => [new PhantomWalletAdapter()], []);
 
   return (
     <ConnectionProvider endpoint={endpoint}>
