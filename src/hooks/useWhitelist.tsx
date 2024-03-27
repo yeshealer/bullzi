@@ -4,11 +4,14 @@ import axios from "axios";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useSearchParams } from "next/navigation";
 
-interface Iprops {
-  referList: [string];
-  referralLink: string;
+interface UserInfoProps {
+  refId: string;
   referralCount: number;
   walletAddress: string;
+}
+
+interface Iprops {
+  referList: [string];
 }
 
 const useWhiteList = () => {
@@ -16,7 +19,9 @@ const useWhiteList = () => {
   const searchParams = useSearchParams();
 
   const saved = useRef(false);
-  const [userDetails, setUserDetails] = useState<Iprops>();
+  const [userDetails, setUserDetails] = useState<Iprops & UserInfoProps>();
+  const [allInfo, setAllInfo] = useState<UserInfoProps[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const saveWalletAddressToDatabase = useCallback(
     async (walletAddress: string) => {
@@ -40,8 +45,7 @@ const useWhiteList = () => {
     [disconnect]
   );
 
-  const FetchUserDetails = useCallback(async () => {
-    console.log(saved.current);
+  const fetchUserDetails = useCallback(async () => {
     if ((saved.current = false)) return;
     const walletAddress = publicKey as unknown as string;
 
@@ -58,18 +62,32 @@ const useWhiteList = () => {
     }
   }, [publicKey, saved.current]);
 
+  const fetchAllInfo = async () => {
+    try {
+      setIsLoading(true);
+      const allUserInfo = await axios.post(`/api/userinfo`);
+      setAllInfo(allUserInfo.data);
+      setIsLoading(false);
+    } catch (err) {
+      toast.error("Failed to fetch users data");
+    }
+  };
+
   const saveAndFetchData = async () => {
     if (connected && publicKey) {
       await saveWalletAddressToDatabase(publicKey as unknown as string);
-      await FetchUserDetails();
+      await fetchUserDetails();
     }
   };
 
   return {
     saveWalletAddressToDatabase,
-    FetchUserDetails,
+    fetchUserDetails,
     saveAndFetchData,
+    fetchAllInfo,
     userDetails,
+    allInfo,
+    isLoading,
   };
 };
 

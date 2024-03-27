@@ -1,7 +1,13 @@
-import React from 'react'
+"use client";
+
+import AdminPanelSection from "@/components/AdminPanelSection";
+import ConnectProvider from "@/components/ConnectProvider";
+import React from "react";
 
 export default function AdminPanelPage() {
   return (
-    <div>page</div>
-  )
+    <ConnectProvider>
+      <AdminPanelSection />
+    </ConnectProvider>
+  );
 }

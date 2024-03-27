@@ -9,7 +9,7 @@ const generateRandomString = (length: number) => {
 
 // Function to generate referral link
 const generateReferralLink = (refId: string) => {
-  return `http://localhost:3000/earlyaccess?ref=${refId}`;
+  return `https://bullzi.vercel.app/earlyaccess?ref=${refId}`;
 };
 
 export async function POST(req: Request) {
