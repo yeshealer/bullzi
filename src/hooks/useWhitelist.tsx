@@ -12,6 +12,7 @@ interface UserInfoProps {
 
 interface Iprops {
   referList: [string];
+  referralLink: string;
 }
 
 const useWhiteList = () => {
