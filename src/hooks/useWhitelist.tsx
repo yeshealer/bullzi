@@ -1,228 +1,76 @@
-import { Program, AnchorProvider, web3, utils } from "@project-serum/anchor";
-import { Counter } from "@/api/types/counter";
-import {
-  connection,
-  commitmentlevel,
-  counterProgramID,
-  counterProgramInterface,
-  whitelistProgramID,
-  whitelistProgramInterface,
-  endpoint,
-} from "@/api/utils/constants";
-import { AnchorWallet, useWallet } from "@solana/wallet-adapter-react";
-import { signIn } from "next-auth/react";
-import base58 from "bs58";
-import { useAuthRequestChallengeSolana } from "@moralisweb3/next";
+import { useCallback, useRef, useState } from "react";
+import toast from "react-hot-toast";
+import axios from "axios";
+import { useWallet } from "@solana/wallet-adapter-react";
+import { useSearchParams } from "next/navigation";
 
-interface WhiteListProps {
-  wallet: AnchorWallet | undefined;
-  publicKey: web3.PublicKey | null;
+interface Iprops {
+  referList: [string];
+  referralLink: string;
+  referralCount: number;
+  walletAddress: string;
 }
 
-async function airdrop(connection, destinationWallet, amount) {
-  const airdropSignature = await connection.requestAirdrop(
-    destinationWallet.publicKey,
-    amount * web3.LAMPORTS_PER_SOL
+const useWhiteList = () => {
+  const { disconnect, publicKey, connected } = useWallet();
+  const searchParams = useSearchParams();
+
+  const saved = useRef(false);
+  const [userDetails, setUserDetails] = useState<Iprops>();
+
+  const saveWalletAddressToDatabase = useCallback(
+    async (walletAddress: string) => {
+      const referrerId = searchParams.get("ref");
+      const body = {
+        walletAddress: walletAddress,
+        referrerId: referrerId || "",
+      };
+
+      const loadingToast = toast.loading("Whitelisting your wallet...");
+      try {
+        await axios.post("/api/wallet", body);
+        toast.dismiss(loadingToast);
+        toast.success("Successfully whitelisted!");
+      } catch (error: any) {
+        toast.dismiss(loadingToast);
+        toast.error(error.response.data);
+      }
+      saved.current = true;
+    },
+    [disconnect]
   );
-  const latestBlockHash = await connection.getLatestBlockhash();
-  const tx = await connection.confirmTransaction({
-    blockhash: latestBlockHash.blockhash,
-    lastValidBlockHeight: latestBlockHash.lastValidBlockHeight,
-    signature: airdropSignature,
-  });
-  return tx;
-}
 
-const useWhitelist = ({ wallet, publicKey }: WhiteListProps) => {
-  const { signMessage, disconnect } = useWallet();
-  const { requestChallengeAsync, error } = useAuthRequestChallengeSolana();
-
-  const whitelist = web3.Keypair.generate();
-
-  const getProvider = () => {
-    if (!wallet) return;
-    const provider = new AnchorProvider(connection, wallet, {
-      preflightCommitment: commitmentlevel,
-    });
-    return provider;
-  };
-
-  const fetchData = async () => {
-    const provider = getProvider();
-
-    const counterProgram = new Program(
-      counterProgramInterface,
-      counterProgramID,
-      provider
-    );
-    const [counterPDA] = web3.PublicKey.findProgramAddressSync(
-      [Buffer.from(utils.bytes.utf8.encode("counter")), publicKey!.toBuffer()],
-      counterProgramID
-    );
+  const FetchUserDetails = useCallback(async () => {
+    console.log(saved.current);
+    if ((saved.current = false)) return;
+    const walletAddress = publicKey as unknown as string;
 
     try {
-      const counter = await counterProgram.account.counter.fetch(counterPDA);
-      return (counter as any).count.toNumber();
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const InitializeCounter = async () => {
-    const provider = getProvider();
-
-    const counterProgram = new Program(
-      counterProgramInterface,
-      counterProgramID,
-      provider
-    );
-    if (!provider) return;
-
-    // await airdrop(provider.connection, whitelist, 1);
-    const initial = await counterProgram.provider.connection.getBalance(
-      whitelist.publicKey
-    );
-    console.log(initial);
-    console.log(whitelist.publicKey.toString());
-
-    let [counterPDA, counterBump] = web3.PublicKey.findProgramAddressSync(
-      [Buffer.from(utils.bytes.utf8.encode("counter")), publicKey!.toBuffer()],
-      counterProgram.programId
-    );
-
-    console.log(counterBump);
-
-    try {
-      await counterProgram.methods
-        .initCounter(counterBump)
-        .accounts({
-          authority: publicKey,
-          counter: counterPDA,
-          systemProgram: web3.SystemProgram.programId,
-        })
-        .signers([])
-        .rpc();
-      const counter = await counterProgram.account.counter.fetch(counterPDA);
-      // setCounter(counter);
-      console.log("Your counter PublicKey: ", counterPDA.toString(), counter);
-      // console.log("Your counter number is: ", counter.count.toNumber());
-    } catch (e) {
-      console.log(e);
-    }
-    try {
-      await counterProgram.methods
-        .pointToWhitelist()
-        .accounts({
-          authority: publicKey,
-          counter: counterPDA,
-          whitelisting: whitelist.publicKey,
-          pointerToWhitelistId: whitelistProgramID,
-          systemProgram: web3.SystemProgram.programId,
-        })
-        .signers([whitelist])
-        .rpc();
-      let counter = await counterProgram.account.counter.fetch(counterPDA);
-      // setCounter(counter);
-      console.log("HELLO", counterPDA.toString());
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  const initContract = async () => {
-    try {
-      const walletAddress = publicKey!.toBase58();
-      if (!walletAddress) throw new Error("Wallet not connected!");
-      await InitializeCounter();
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const addToWhiteList = async () => {
-    const provider = getProvider();
-    const counterProgram = new Program(
-      counterProgramInterface,
-      counterProgramID,
-      provider
-    ) as Program<Counter>;
-    const [counterPDA] = web3.PublicKey.findProgramAddressSync(
-      [Buffer.from(utils.bytes.utf8.encode("counter")), publicKey!.toBuffer()],
-      counterProgramID
-    );
-    console.log("counter PDA =>", counterPDA.toBase58());
-    // let counter = await counterProgram.account.counter.fetch(counterPDA);
-    // console.log("current counter => ", counter);
-    const money = await counterProgram.provider.connection.getBalance(
-      whitelist.publicKey
-    );
-    console.log("money is : ", money, whitelist.publicKey.toBase58());
-    try {
-      const [PDA, _] = web3.PublicKey.findProgramAddressSync(
-        [whitelist.publicKey.toBuffer(), publicKey!.toBuffer()],
-        whitelistProgramID
+      const connectedUserDetails = await axios.post(
+        `/api/wallet/me/${walletAddress}`
       );
 
-      await counterProgram.methods
-        .addOrRemove(publicKey!, false)
-        .accounts({
-          authority: publicKey!,
-          counter: counterPDA,
-          pdaId: PDA,
-          whitelisting: whitelist.publicKey,
-          updateId: whitelistProgramID,
-          systemProgram: web3.SystemProgram.programId,
-        })
-        .signers([])
-        .rpc();
-
-      const counter = await counterProgram.account.counter.fetch(counterPDA);
-      console.log("now counter => ", counter);
-      console.log("Adding address", publicKey!.toString(), "to the whitelist");
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const signCustomMessage = async () => {
-    if (!publicKey) {
-      throw new Error("Wallet not avaiable to process request.");
-    }
-    const address = publicKey.toBase58();
-    const challenge = await requestChallengeAsync({
-      address,
-      network: "devnet",
-    });
-    const encodedMessage = new TextEncoder().encode(challenge?.message);
-    if (!encodedMessage) {
-      throw new Error("Failed to get encoded message.");
-    }
-
-    const signedMessage = await signMessage?.(encodedMessage);
-    const signature = base58.encode(signedMessage as Uint8Array);
-    try {
-      const authResponse = await signIn("moralis-auth", {
-        message: challenge?.message,
-        signature,
-        network: "Solana",
-        redirect: false,
-      });
-      if (authResponse?.error) {
-        throw new Error(authResponse.error);
+      if (connectedUserDetails.data) {
+        setUserDetails(connectedUserDetails.data);
       }
-    } catch (e) {
-      disconnect();
-      console.log(e);
-      return;
+    } catch (error) {
+      toast.error("Something went wrong");
+    }
+  }, [publicKey, saved.current]);
+
+  const saveAndFetchData = async () => {
+    if (connected && publicKey) {
+      await saveWalletAddressToDatabase(publicKey as unknown as string);
+      await FetchUserDetails();
     }
   };
 
   return {
-    addToWhiteList,
-    initContract,
-    fetchData,
-    signCustomMessage,
+    saveWalletAddressToDatabase,
+    FetchUserDetails,
+    saveAndFetchData,
+    userDetails,
   };
 };
 
-export default useWhitelist;
+export default useWhiteList;
