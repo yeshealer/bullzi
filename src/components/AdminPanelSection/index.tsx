@@ -7,7 +7,7 @@ export default function AdminPanelSection() {
 
   useEffect(() => {
     fetchAllInfo();
-  }, []);
+  }, [fetchAllInfo]);
 
   return (
     <div className="w-screen h-screen p-10 bg-green-400/50">
@@ -37,7 +37,7 @@ export default function AdminPanelSection() {
             <tbody>
               {allInfo &&
                 allInfo.map((item, index) => (
-                  <tr>
+                  <tr key={item.walletAddress}>
                     <th>{index + 1}</th>
                     <td>{item.walletAddress}</td>
                     <td>{item.refId}</td>
